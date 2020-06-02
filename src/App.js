@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import "./style/custome.css";
 import { FormControl } from "react-bootstrap";
-import BookingRow from "./components/BookingRow";
+import BookingSeller from "./components/BookingSeller";
 import axios from "axios";
 
 function App() {
@@ -9,6 +9,7 @@ function App() {
   const [products, setProducts] = useState([]);
   const [sellers, setSellers] = useState([]);
   const [display, setDisplay] = useState([]);
+
   useEffect(() => {
     axios
       .get("https://blooming-fortress-38880.herokuapp.com/bookings")
@@ -23,51 +24,77 @@ function App() {
       .then((res) => setSellers(res.data.data))
       .catch((err) => console.log(err));
   }, []);
+  const disMemo = useMemo(() => {
+    // setDisplay(
+    //   sellers.map((seller) => {
+    //     const mappedSeller = seller;
+    //     const sellerProduct = products.filter(
+    //       (product) => product.sellerId === seller.id
+    //     );
+    //     const sellerBooking = bookings.filter((booking) => {
+    //       sellerProduct.find((product) => product.id === booking.productId);
+    //     });
+    //     mappedSeller.products = sellerProduct;
+    //     mappedSeller.bookings = sellerBooking;
+    //     return mappedSeller;
+    //   })
+    // );
+    setDisplay(
+      sellers.map((seller) => ({
+        sellerName: seller.name,
+        bookingData: products
+          .map(
+            (product) =>
+              seller.id === product.sellerId &&
+              bookings
+                .map(
+                  (booking) =>
+                    product.id === booking.productId && {
+                      bookingId: booking.id,
+                      productName: product.name,
+                      bookingQuantity: booking.quantity,
+                      productRate: product.rate,
+                      cost: (booking.quantity * product.rate) / 100000,
+                      bookingStartDate: booking.startDate,
+                      bookingEndDate: booking.endDate,
+                    }
+                )
+                .filter((a) => a !== false)
+          )
+          .filter((a) => a !== false),
+      }))
+    );
 
-  // setDisplay(
-  //   sellers.map((seller) => {
-  //     const mappedSeller = seller;
-  //     const sellerProduct = products.filter(
-  //       (product) => product.sellerId === seller.id
-  //     );
-  //     const sellerBooking = bookings.filter((booking) => {
-  //       sellerProduct.find((product) => product.id === booking.productId);
-  //     });
-  //     mappedSeller.products = sellerProduct;
-  //     mappedSeller.bookings = sellerBooking;
-  //     return mappedSeller;
-  //   })
-  // );
-  // console.log(display);
-
-  // setDisplay(
-  //   sellers.map((seller) =>
-  //     products.map(
-  //       (product) =>
-  //         seller.id === product.sellerId &&
-  //         bookings.map(
-  //           (booking) =>
-  //             product.id === booking.productId && {
-  //               sellerName: seller.name,
-  //               bookingData: {
-  //                 bookingId: booking.id,
-  //                 productName: product.name,
-  //                 bookingQuantity: booking.quantity,
-  //                 productRate: product.rate,
-  //                 cost: (booking.quantity * product.rate) / 100000,
-  //                 bookingStartDate: booking.startDate,
-  //                 bookingEndDate: booking.endDate,
-  //               },
-  //             }
-  //         )
-  //     )
-  //   )
-  // );
+    // setDisplay(
+    //   sellers.map((seller) =>
+    //     products
+    //       .map(
+    //         (product) =>
+    //           seller.id === product.sellerId && {
+    //             sellerName: seller.name,
+    //             bookingData: bookings
+    //               .map(
+    //                 (booking) =>
+    //                   product.id === booking.productId && {
+    //                     bookingId: booking.id,
+    //                     productName: product.name,
+    //                     bookingQuantity: booking.quantity,
+    //                     productRate: product.rate,
+    //                     cost: (booking.quantity * product.rate) / 100000,
+    //                     bookingStartDate: booking.startDate,
+    //                     bookingEndDate: booking.endDate,
+    //                   }
+    //               ).filter((a) => a !== false),
+    //           }
+    //       ).filter((a) => a !== false)
+    //   )
+    // );
+  }, [bookings, products, sellers]);
 
   return (
     <div className="roboto body-margin">
       <h1 className="title mt-4 mb-4">Adslot.</h1>
-      <div className="roboto subpart mb-3">
+      <div className="roboto sub-title mb-3">
         <h3>Bookings</h3>
         <FormControl
           size="sm"
@@ -76,14 +103,8 @@ function App() {
         />
       </div>
       <div>
-        <BookingRow
-          id="ID"
-          productName="Product Name"
-          quantity="Quantity"
-          rate="Rate"
-          cost="Cost"
-          startDate="Start Date"
-          endDate="End Date"
+        <BookingSeller
+          display={display}
         />
       </div>
     </div>
