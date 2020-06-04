@@ -1,14 +1,15 @@
 import React, { useState, useEffect, useMemo } from "react";
 import "./style/custome.css";
-import { FormControl } from "react-bootstrap";
 import BookingSeller from "./components/BookingSeller";
 import axios from "axios";
+import Search from "./components/Search";
 
 function App() {
   const [bookings, setBookings] = useState([]);
   const [products, setProducts] = useState([]);
   const [sellers, setSellers] = useState([]);
   const [display, setDisplay] = useState([]);
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     axios
@@ -90,22 +91,17 @@ function App() {
     //   )
     // );
   }, [bookings, products, sellers]);
+  console.log(display);
 
   return (
     <div className="roboto body-margin">
       <h1 className="title mt-4 mb-4">Adslot.</h1>
       <div className="roboto sub-title mb-3">
         <h3>Bookings</h3>
-        <FormControl
-          size="sm"
-          className="roboto search-pos"
-          placeholder="search for booking by product name"
-        />
+        <Search search={search} setSearch={setSearch}/>
       </div>
       <div>
-        <BookingSeller
-          display={display}
-        />
+        <BookingSeller display={display} />
       </div>
     </div>
   );

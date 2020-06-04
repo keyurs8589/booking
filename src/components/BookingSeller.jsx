@@ -10,7 +10,7 @@ function BookingSeller({ display }) {
         <div className="my-4" key={index}>
           <h4 className="seller-title">{dis.sellerName}</h4>
           {dis.bookingData.length === 0 ? (
-            <BookingNotActive />
+            <BookingNotActive message="No Bookings."/>
           ) : (
             <div>
               <Booking

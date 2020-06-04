@@ -9,16 +9,19 @@ function Booking({ booking }) {
     String(today.getMonth() + 1).padStart(2, "0") +
     "-" +
     String(today.getDay()).padStart(2, "0");
+  let startDate = booking.bookingStartDate.substring(0, 10);
+  let endDate = booking.bookingEndDate.substring(0, 10);
+  let activeFlag = startDate <= today && endDate >= today;
+  let visibleFlag = endDate <= today;
   return (
     <ListGroup size="sm" horizontal className="roboto">
       <ListGroup.Item
         className={
           booking.bookingId === "ID"
             ? "rounded-0 py-1 px-2 font-weight-bold bg-grey"
-            : booking.bookingStartDate.substring(0, 10) <= today &&
-              booking.bookingEndDate.substring(0, 10) >= today
+            : activeFlag
             ? "rounded-0 py-1 px-2 font-weight-bold bg-green book-upper list-group-item-border"
-            : booking.bookingEndDate.substring(0, 10) <= today
+            : visibleFlag
             ? "d-none"
             : "rounded-0 py-1 px-2 font-weight-bold book-upper list-group-item-border"
         }
@@ -29,10 +32,9 @@ function Booking({ booking }) {
         className={
           booking.bookingId === "ID"
             ? "rounded-0 py-1 px-2 font-weight-bold bg-grey list-group-item2"
-            : booking.bookingStartDate.substring(0, 10) <= today &&
-              booking.bookingEndDate.substring(0, 10) >= today
+            : activeFlag
             ? " py-1 px-2 bg-green list-group-item2 list-group-item-border"
-            : booking.bookingEndDate.substring(0, 10) <= today
+            : visibleFlag
             ? "d-none"
             : " py-1 px-2 list-group-item2 list-group-item-border"
         }
@@ -43,10 +45,9 @@ function Booking({ booking }) {
         className={
           booking.bookingId === "ID"
             ? "rounded-0 py-1 px-2 font-weight-bold bg-grey list-group-right"
-            : booking.bookingStartDate.substring(0, 10) <= today &&
-              booking.bookingEndDate.substring(0, 10) >= today
+            : activeFlag
             ? " py-1 px-2  bg-green list-group-right list-group-item-border"
-            : booking.bookingEndDate.substring(0, 10) <= today
+            : visibleFlag
             ? "d-none"
             : " py-1 px-2 list-group-right list-group-item-border"
         }
@@ -59,10 +60,9 @@ function Booking({ booking }) {
         className={
           booking.bookingId === "ID"
             ? "rounded-0 py-1 px-2 font-weight-bold bg-grey list-group-right"
-            : booking.bookingStartDate.substring(0, 10) <= today &&
-              booking.bookingEndDate.substring(0, 10) >= today
+            : activeFlag
             ? " py-1 px-2  bg-green list-group-right list-group-item-border"
-            : booking.bookingEndDate.substring(0, 10) <= today
+            : visibleFlag
             ? "d-none"
             : " py-1 px-2  list-group-right list-group-item-border"
         }
@@ -78,10 +78,9 @@ function Booking({ booking }) {
         className={
           booking.bookingId === "ID"
             ? "rounded-0 py-1 px-2 font-weight-bold bg-grey list-group-right"
-            : booking.bookingStartDate.substring(0, 10) <= today &&
-              booking.bookingEndDate.substring(0, 10) >= today
+            : activeFlag
             ? " py-1 px-2  bg-green list-group-right list-group-item-border"
-            : booking.bookingEndDate.substring(0, 10) <= today
+            : visibleFlag
             ? "d-none"
             : " py-1 px-2  list-group-right list-group-item-border"
         }
@@ -94,10 +93,9 @@ function Booking({ booking }) {
         className={
           booking.bookingId === "ID"
             ? "rounded-0 py-1 px-2 font-weight-bold bg-grey list-group-center"
-            : booking.bookingStartDate.substring(0, 10) <= today &&
-              booking.bookingEndDate.substring(0, 10) >= today
+            : activeFlag
             ? " py-1 px-2 bg-green list-group-center list-group-item-border"
-            : booking.bookingEndDate.substring(0, 10) <= today
+            : visibleFlag
             ? "d-none"
             : " py-1 px-2 list-group-center list-group-item-border"
         }
@@ -108,10 +106,9 @@ function Booking({ booking }) {
         className={
           booking.bookingId === "ID"
             ? "rounded-0 py-1 px-2 font-weight-bold bg-grey list-group-center"
-            : booking.bookingStartDate.substring(0, 10) <= today &&
-              booking.bookingEndDate.substring(0, 10) >= today
+            : activeFlag
             ? "rounded-0  py-1 px-2  bg-green list-group-center list-group-item-border"
-            : booking.bookingEndDate.substring(0, 10) <= today
+            : visibleFlag
             ? "d-none"
             : "rounded-0  py-1 px-2 list-group-center list-group-item-border"
         }
