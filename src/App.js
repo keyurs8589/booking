@@ -8,7 +8,7 @@ function App() {
   const [bookings, setBookings] = useState([]);
   const [products, setProducts] = useState([]);
   const [sellers, setSellers] = useState([]);
-  const [display, setDisplay] = useState([]);
+  const [display, setDisplay] = useState([]);  
   const [search, setSearch] = useState("");
 
   useEffect(() => {
@@ -98,7 +98,7 @@ function App() {
       <h1 className="title mt-4 mb-4">Adslot.</h1>
       <div className="roboto sub-title mb-3">
         <h3>Bookings</h3>
-        <Search search={search} setSearch={setSearch}/>
+        <Search search={search} setSearch={setSearch} />
       </div>
       <div>
         <BookingSeller display={display} />
