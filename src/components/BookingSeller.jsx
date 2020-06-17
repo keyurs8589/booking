@@ -3,7 +3,7 @@ import BookingNotActive from './BookingNotActive';
 import Booking from './Booking';
 import moment from 'moment';
 
-function BookingSeller({ finalMapped, sellers }) {
+function BookingSeller({ finalMapped, sellers, search }) {
   let today = moment(new Date()).format('DD-MM-YYYY');
   return (
     <div className='mb-3'>
@@ -51,7 +51,9 @@ function BookingSeller({ finalMapped, sellers }) {
               <BookingNotActive message='No Active Booking.' />
             )
           ) : (
-            <BookingNotActive message='No Booking.' />
+            <BookingNotActive
+              message={search ? `No matching result` : 'No Booking.'}
+            />
           )}
         </div>
       ))}
